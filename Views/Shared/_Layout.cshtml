@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>APE | @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/common.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true"/>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
@@ -14,6 +14,6 @@
         @RenderBody()
     </main>
 </div>
-@await RenderSectionAsync("Scripts", required: false)
+<partial name="_ValidationScriptsPartial"/>
 </body>
 </html>

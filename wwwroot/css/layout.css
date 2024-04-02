@@ -1,0 +1,37 @@
+@import "vars.css";
+
+main {
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+}
+
+thead th {
+    background: var(--header-background);
+}
+
+tr > td:last-of-type {
+    a {
+        display: inline;
+    }
+}
+
+tr {
+    border-bottom: 1px solid var(--contrast-background);
+}
+
+hr {
+    height: 1px;
+    background-color: var(--contrast-background);
+    border: none;
+}
+
+.form-group {
+    margin-top: 8px;
+}
+
+dt {
+    font-weight: bold;
+}

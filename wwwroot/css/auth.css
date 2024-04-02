@@ -40,11 +40,6 @@ input[type="submit"] {
     max-width: min-content;
     padding: 4px;
     margin: 10px auto 2px;
-}   
-
-.text-danger {
-    color: red;
-    font-size: 10pt;
 }
 
 .input-wrapper{

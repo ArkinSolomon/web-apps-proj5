@@ -15,3 +15,8 @@ body {
     height: 100vh;
     overflow: hidden;
 }
+
+.text-danger {
+    color: red;
+    font-size: 10pt;
+}

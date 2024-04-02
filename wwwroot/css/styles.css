@@ -438,7 +438,7 @@ tr > td:last-of-type {
 
 .acc-list-wrapper p.list-no-data {
     text-align: center;
-    color: dimgrey;
+    color: var(--header-background);
 }
 
 #plan-major-minor-selector ul > li {
@@ -446,7 +446,7 @@ tr > td:last-of-type {
 }
 
 li.acc-list-item {
-    border-bottom: 0.5px solid dimgrey;
+    border-bottom: 0.5px solid var(--header-background);
     padding: 5px 4px;
     cursor: pointer;
 

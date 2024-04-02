@@ -32,6 +32,24 @@
       <_ContentIncludedByDefault Remove="Views\Course\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Course\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Requirement\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Requirement\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Requirement\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Requirement\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Requirement\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Course\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Course\Index.cshtml" />
     </ItemGroup>
 
 </Project>

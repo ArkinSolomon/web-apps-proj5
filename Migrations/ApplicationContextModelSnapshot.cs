@@ -186,6 +186,7 @@ namespace WebAppsProject5.Migrations
             modelBuilder.Entity("WebAppsProject5.Models.Course", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(10)
                         .HasColumnType("Varchar(10)");
 
                     b.Property<float>("Credits")
@@ -200,7 +201,8 @@ namespace WebAppsProject5.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(64)
+                        .HasColumnType("Varchar(64)");
 
                     b.HasKey("Id");
 
@@ -356,6 +358,10 @@ namespace WebAppsProject5.Migrations
 
             modelBuilder.Entity("WebAppsProject5.Models.Requirement", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
                     b.Property<int>("AccomplishmentId")
                         .HasColumnType("int");
 
@@ -365,6 +371,8 @@ namespace WebAppsProject5.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AccomplishmentId");
 
