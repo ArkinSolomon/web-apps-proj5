@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using WebAppsProject5.Data;
 
 namespace WebAppsProject5.Models;
 
-// Add profile data for application users by adding properties to the PlannerUser class
 public class PlannerUser : IdentityUser
 {
+    [Column(TypeName = "Year")] public int Year { get; init; } = 2024;
+    public TermSeason CurrentTermSeason { get; init; } = TermSeason.Spring;
+    
+    [Column(TypeName = "Varchar(33)")] public string Name { get; set; }
 }
-

@@ -1,0 +1,17 @@
+@import "vars.css";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    font-family: "Comic Sans MS", cursive;
+}
+
+html,
+body {
+    background-color: var(--body-background);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}

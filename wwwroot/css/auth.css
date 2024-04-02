@@ -1,0 +1,58 @@
+#wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    min-width: 400px;
+    max-width: 45%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+
+    padding: 15px;
+}
+
+form {
+    width: fit-content;
+}
+
+input, label, .checkbox {
+    display: block;
+    width: 240px;
+    white-space: nowrap;
+}
+
+.checkbox label {
+    max-lines: 1;
+    line-break: strict;
+    white-space: nowrap;
+}
+
+input[type="checkbox"], .checkbox label {
+    width: min-content;
+    display: inline-block;
+}
+
+input[type="submit"] {
+    max-width: min-content;
+    padding: 4px;
+    margin: 10px auto 2px;
+}   
+
+.text-danger {
+    color: red;
+    font-size: 10pt;
+}
+
+.input-wrapper{
+    display: block;
+    margin: 1px auto;
+    width: min-content;
+}
+
+li {
+    list-style: none;
+}

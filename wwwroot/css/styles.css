@@ -1,0 +1,535 @@
+@import "vars.css";
+
+body.loading {
+    display: none;
+}
+
+#background-blur {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: black;
+    opacity: 40%;
+
+    z-index: 500;
+
+    display: none;
+    visibility: hidden;
+}
+
+.plan-modify-open #background-blur {
+    display: unset;
+    visibility: unset;
+}
+
+.plan-modify-open {
+    filter: blur(2px);
+}
+
+#main-wrapper {
+    display: flex;
+    position: relative;
+}
+
+section {
+    border: 1px solid black;
+}
+
+header {
+    background-color: var(--header-background);
+    height: 4em;
+    position: relative;
+}
+
+header h1 {
+    font-size: 25pt;
+}
+
+#student-data {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    width: fit-content;
+    transform: translateY(-50%);
+    background-color: #2e703d;
+    border-radius: 8px;
+
+    padding: 4px 10px;
+    margin-right: 4px;
+    height: 90%;
+
+    display: grid;
+    column-gap: 18px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    color: white;
+}
+
+#student-data p, a {
+    display: block;
+}
+
+#student-data > a {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#student-data > a:hover {
+    font-weight: bold;
+}
+
+#main-wrapper,
+aside,
+main {
+    height: 100%;
+}
+
+aside {
+    flex-grow: 0;
+    width: 15%;
+}
+
+main {
+    flex-grow: 1;
+}
+
+aside,
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom {
+    flex-grow: 1;
+    height: 35vh;
+}
+
+#course-finder {
+    overflow-y: scroll;
+}
+
+#course-finder-table,
+#kbbModel {
+    margin-bottom: 75px;
+}
+
+thead th {
+    background-color: var(--header-background);
+    position: sticky;
+    top: 0;
+}
+
+aside .top {
+    overflow-y: scroll;
+}
+
+.top {
+    height: 70%;
+}
+
+main.top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    color: white;
+    /* https://stackoverflow.com/questions/47601564/equal-width-columns-in-css-grid */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.grid > .term-block {
+    background-color: rgb(33, 135, 53);
+    margin: 5px;
+    padding: 5px;
+    position: relative;
+    border-radius: 7px;
+}
+
+.grid > .term-block p:first-of-type {
+    font-size: 19pt;
+}
+
+.grid .term-block {
+    transition: background-color 100ms ease-in-out;
+}
+
+.grid .term-block:hover {
+    background-color: var(--bright-contrast-background);
+}
+
+.grid .term-block p:hover:not(.term):not(.hours) {
+    background-color: rgb(36, 91, 91);
+    border-radius: 5px;
+}
+
+.grid .term-block p button {
+    all: unset;
+    display: none;
+    visibility: hidden;
+    position: relative;
+
+    float: right;
+    background: none;
+    color: rgb(227, 227, 227);
+    line-height: 17px;
+    margin: 3px;
+
+    vertical-align: middle;
+    text-align: center;
+
+    border-radius: 3px;
+    aspect-ratio: 1;
+    width: 17px;
+}
+
+.grid .term-block p button > span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    line-height: 100%;
+}
+
+.grid .term-block p:hover button {
+    display: inline;
+    visibility: visible;
+}
+
+.grid .term-block p:hover button:hover {
+    background-color: rgba(0, 0, 0, 0.24);
+}
+
+.hours {
+    position: absolute;
+    right: 8px;
+    top: 0;
+}
+
+#links {
+    padding: 4px 6px;
+    overflow-y: scroll;
+}
+
+#links a,
+#links a:visited {
+    color: var(--contrast-background);
+    font-size: 14pt;
+    text-decoration: none;
+}
+
+#links a:hover {
+    text-decoration: underline;
+}
+
+h3 {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+#message {
+    display: none;
+    visibility: hidden;
+}
+
+#search {
+    float: right;
+    position: absolute;
+    top: 4px;
+    right: 1px;
+}
+
+.update {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+main .bottom {
+    position: relative;
+}
+
+#update input,
+#update select {
+    width: 200px;
+}
+
+#year-mod-wrapper {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+}
+
+#add-course-form {
+    display: block;
+    margin: 2px auto;
+    width: fit-content;
+}
+
+#add-course-form select {
+    min-width: 8rem;
+}
+
+#add-course-form input,
+#add-course-form select {
+    display: block;
+    margin: 4px auto;
+}
+
+input.error {
+    border-color: red;
+}
+
+table {
+    width: 100%;
+    border: 1px solid;
+}
+
+tr > td:first-of-type {
+    width: 12%;
+    text-align: center;
+}
+
+tr > td:nth-of-type(2) {
+    width: 30%;
+}
+
+tr > td:last-of-type {
+    width: 90px;
+    text-align: center;
+}
+
+.kbb-problem:first-of-type {
+    margin-top: 12px;
+}
+
+.kbb-problem {
+    display: block;
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+.ui-accordion-header {
+    display: block;
+    text-align: left;
+    background-color: var(--header-background);
+    border: 2px solid black;
+    padding: 1px 3px 1px 8px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.ui-accordion-content {
+    display: block;
+    padding: 3px 6px;
+}
+
+.accordion-separator {
+    border-color: black;
+    border-width: 0.25px;
+    margin: 1.5px;
+}
+
+#plan-modify-window {
+    width: 80vw;
+    height: 80vh;
+    padding: 12px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--body-background);
+
+    position: relative;
+}
+
+#plan-modify-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+#plan-modify-header {
+    background-color: var(--header-background);
+    width: 100%;
+    flex: 0 1 40px;
+}
+
+#plan-modify-header {
+    font-size: 18pt;
+}
+
+#plan-modify-body {
+    flex: 1 1 auto;
+    padding: 18px;
+}
+
+#plan-modify-buttons {
+    height: 25px;
+    flex: 0 1 25px;
+
+    display: flex;
+    flex-flow: row;
+    gap: 14px;
+    justify-content: right;
+}
+
+#plan-modify-window button {
+    width: 75px;
+}
+
+#delete-plan-button {
+    float: right;
+    color: red;
+}
+
+#plan-major-minor-selector {
+    display: flex;
+    gap: 14px;
+    padding: 10px;
+    min-width: 350px;
+    max-width: 85%;
+    min-height: 65%;
+
+    margin: 0 auto;
+}
+
+#plan-major-minor-selector > div, .acc-list-wrapper {
+    flex: 1;
+    margin: 4px auto;
+    padding: 8px;
+    min-height: 84px;
+
+    display: flex;
+    flex-flow: column;
+}
+
+.acc-list-wrapper {
+    border: 1px solid black;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.acc-list-wrapper > p {
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid black;
+    font-size: 14pt;
+    line-height: 15pt;
+    margin-bottom: 3px;
+}
+
+.acc-list-wrapper p.list-no-data {
+    text-align: center;
+    color: dimgrey;
+}
+
+#plan-major-minor-selector ul > li {
+    list-style-type: none;
+}
+
+li.acc-list-item {
+    border-bottom: 0.5px solid dimgrey;
+    padding: 5px 4px;
+    cursor: pointer;
+
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+li.acc-list-item:last-of-type {
+    border-bottom: none;
+}
+
+li.acc-list-item:hover {
+    background-color: var(--bright-contrast-background);
+    color: white;
+}
+
+#no-plan {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 3;
+}
+
+#no-plan div {
+    width: max-content;
+    display: block;
+}
+
+#no-plan a, #no-plan p {
+    color: black;
+    font-size: 17pt;
+    text-align: center;
+}
+
+#no-plan p {
+    margin-bottom: 8px;
+}
+
+#no-plan a {
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 12pt;
+}
+
+.remove-acc-button {
+    display: inline-block;
+    position: relative;
+
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+}
+
+.remove-acc-button > p {
+    opacity: 0;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.remove-acc-button:hover > p {
+    opacity: 100%;
+}
+
+.remove-acc-button:hover {
+    background-color: var(--contrast-background);
+}
+
+li.acc-list-item > p {
+    display: inline-block;
+}
+
+#course-finder-table th {
+    cursor: pointer;
+}
+
+#course-finder-table th.sorted-by {
+    text-decoration: underline;
+}
+
+.course-finder-row {
+    cursor: grab;
+}

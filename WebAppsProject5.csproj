@@ -11,6 +11,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
         <PrivateAssets>all</PrivateAssets>
@@ -21,7 +22,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Identity\Data\" />
+      <Folder Include="wwwroot\js\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Course\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Course\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Course\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Course\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Course\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
     </ItemGroup>
 
 </Project>

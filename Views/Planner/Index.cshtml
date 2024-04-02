@@ -1,0 +1,162 @@
+@model PlannerModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>APE | Planner</title>
+    <link href="~/css/common.css" rel="stylesheet">
+    <link href="~/css/styles.css" rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/modalController.js"></script>
+</head>
+
+<body onload="loadData()" class="loading">
+
+<noscript>This website needs JavaScript enabled</noscript>
+<div id="background-blur"></div>
+<dialog id="plan-modify-window">
+    <div id="plan-modify-wrapper">
+        <div id="plan-modify-header">
+            <h3>Edit Plan (<span>No Plan</span>)</h3>
+        </div>
+        <div id="plan-modify-body">
+            <div id="load-plan">
+                <form asp-action="LoadPlan" asp-controller="Plan" method="post">
+                    <label for="plan-select">Select a different plan:</label>
+                    <select id="plan-select" name="plan-select">
+                        <option selected disabled hidden>&lt;Select A Plan&gt;</option>
+                    </select>
+                    <button id="load-plan-button" type="submit">Load Plan</button>
+                </form>
+            </div>
+            <div id="plan-major-minor-selector">
+                <div>
+                    <div class="acc-list-wrapper">
+                        <p>Majors:</p>
+                        <ul id="major-list"></ul>
+                    </div>
+                    <label for="major-add">Add a major:</label>
+                    <select id="major-add">
+                        <option selected disabled hidden>&lt;Add a major&gt;</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="acc-list-wrapper">
+                        <p>Minors:</p>
+                        <ul id="minor-list"></ul>
+                    </div>
+                    <label for="minor-add">Add a minor:</label>
+                    <select id="minor-add">
+                        <option selected disabled hidden>&lt;Add a minor&gt;</option>
+                    </select>
+                </div>
+            </div>
+            <label for="plan-name-update-field">Change name:</label>
+            <input id="plan-name-update-field" name="plan-name-update-field" type="text"
+                   placeholder="Plan Name"><br><br>
+            <form asp-action="NewPlan" asp-controller="Plan" method="post">
+                <input type="submit" value="Create a new plan">
+            </form>
+        </div>
+        <div id="plan-modify-buttons">
+            <button id="plan-modify-close">Cancel</button>
+            <button id="plan-modify-save">Save</button>
+        </div>
+        <form hidden id="update-plan-form" name="update-plan-form" asp-action="UpdatePlan" asp-controller="Plan" method="post">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <input type="text" id="update-plan-form-name" hidden name="plan-name" value="UPDATED PLAN">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <input type="text" id="update-plan-form-id" hidden name="plan-id">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <input type="text" id="update-plan-form-majors" hidden name="majors">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <input type="text" id="update-plan-form-minors" hidden name="minors">
+        </form>
+    </div>
+</dialog>
+<header>
+    <h1>Academic Planning Environment (Caveman Version)</h1>
+    <div id="student-data">
+        <p>Student: <span>@Model.User.Name</span></p>
+        @{
+            var majors = Model.ActivePlan?.Accomplishments.Where(a => a.Type == AccomplishmentType.Major).ToList() ?? [];
+            var majorStr = "N/A";
+            if (majors.Count == 1)
+            {
+                majorStr = majors.First().Name;
+            }
+            else if (majors.Count > 1)
+            {
+                majorStr = majors.First().Name + $" and {majors.Count - 1} more";
+            }
+
+            <p>Major: <span>@majorStr</span></p>
+
+            var yearStr = Model.ActivePlan?.CatalogYear.ToString() ?? "N/A";
+            <p>Catalog: <span>@yearStr</span></p>
+
+            var planNameStr = Model.ActivePlan?.PlanName ?? "N/A";
+            <a onclick="toggleModal()">Plan: <span>@planNameStr</span></a>
+        }
+    </div>
+</header>
+<div id="main-wrapper">
+    <aside>
+        <section class="top">
+            <h3>Requirements</h3>
+            <div id="requirements-accordion">
+            </div>
+        </section>
+        <section class="bottom" id="links">
+            <h3>Links</h3>
+            <ul>
+                <li>
+                    <a href="/~asolomo/cs3220.html">Arkin's Awesome Page</a>
+                </li>
+                <li>
+                    <a href="/~prudhom/cs3220.html">George's Page</a>
+                </li>
+                <li>
+                    <a href="/~tracy/cs3220.html">Weston's Page</a>
+                </li>
+                <li>
+                    <a asp-action="Logout">Logout</a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <main>
+        <section class="top">
+            <div class="grid" id="term-grid">
+                <div id="no-plan" class="hidden">
+                    <div>
+                        <p>You don't have a plan yet.</p>
+                        <a onclick="toggleModal()">Create a plan</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bottom" id="course-finder">
+
+            <h3>Course Selection</h3>
+            <input type="text" id="search" name="search" placeholder="Search" maxlength="30">
+            <table id="course-finder-table">
+                <thead>
+                <th id="course-id-col" class="sorted-by">Course ID</th>
+                <th id="course-title-col">Title</th>
+                <th id="course-desc-col">Description</th>
+                <th id="course-credits-col">Credits</th>
+                </thead>
+                <tbody id="course-finder-table-body"></tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>
