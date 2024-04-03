@@ -530,6 +530,6 @@ li.acc-list-item > p {
     text-decoration: underline;
 }
 
-.course-finder-row {
+.draggable-course {
     cursor: grab;
 }

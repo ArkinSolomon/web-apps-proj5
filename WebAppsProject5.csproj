@@ -37,6 +37,11 @@
       <_ContentIncludedByDefault Remove="Views\Requirement\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Requirement\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Requirement\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CourseOffered\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CourseOffered\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CourseOffered\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CourseOffered\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\CourseOffered\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

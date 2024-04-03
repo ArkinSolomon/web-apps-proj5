@@ -58,6 +58,12 @@ namespace WebAppsProject5.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(course);
+                var newCourseOffered = new CourseOffered
+                {
+                    CourseId = course.Id,
+                    YearOffered = 2024
+                };
+                _context.Add(newCourseOffered);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

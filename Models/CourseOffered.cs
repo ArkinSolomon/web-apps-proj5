@@ -1,11 +1,15 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebAppsProject5.Models;
 
-[Keyless]
 public class CourseOffered
 {
-    public virtual Course Course { get; init; }
-    [Column(TypeName = "Year")] public required int YearOffered { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public required string CourseId { get; set; }
+    public virtual Course? Course { get; set; }
+
+    [Column(TypeName = "Year")]
+    [DisplayName("Year Offered")]
+    public required int YearOffered { get; set; }
 }

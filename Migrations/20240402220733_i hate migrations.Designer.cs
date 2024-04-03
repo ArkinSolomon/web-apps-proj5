@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppsProject5.Models;
 
@@ -11,9 +12,11 @@ using WebAppsProject5.Models;
 namespace WebAppsProject5.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240402220733_i hate migrations")]
+    partial class ihatemigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,7 +219,6 @@ namespace WebAppsProject5.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CourseId")
-                        .IsRequired()
                         .HasColumnType("Varchar(10)");
 
                     b.Property<short>("YearOffered")
@@ -449,9 +451,7 @@ namespace WebAppsProject5.Migrations
                 {
                     b.HasOne("WebAppsProject5.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
                 });

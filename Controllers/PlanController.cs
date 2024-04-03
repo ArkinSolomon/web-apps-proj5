@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using WebAppsProject5.Data;
 using WebAppsProject5.Models;
 
 namespace WebAppsProject5.Controllers;
@@ -117,14 +119,14 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
             {
                 return 0;
             }
-
-            failed = int.TryParse(m, out var parsed);
+            
+            failed = !int.TryParse(m, out var parsed);
             return failed ? 0 : parsed;
         };
 
-        var majors = splitMajors.Select(intSelector).ToHashSet();
-        var minors = splitMinors.Select(intSelector).ToHashSet();
-        if (failed || majors.Count != splitMajors.Length || minors.Count != splitMinors.Length)
+        var majors = majorsStr.IsNullOrEmpty() ? [] : splitMajors.Select(intSelector).ToHashSet();
+        var minors = minorsStr.IsNullOrEmpty() ? [] : splitMinors.Select(intSelector).ToHashSet();
+        if (failed || (majors.Count != splitMajors.Length && !majorsStr.IsNullOrEmpty()) || (minors.Count != splitMinors.Length && !minorsStr.IsNullOrEmpty()))
         {
             return BadRequest();
         }
@@ -137,5 +139,53 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
         await context.SaveChangesAsync();
 
         return RedirectToAction("Index", "Planner");
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> AddCourse()
+    {
+        string? planIdStr = HttpContext.Request.Form["plan-id"];
+        string? courseId = HttpContext.Request.Form["course-id"];
+        string? yearStr = HttpContext.Request.Form["year"];
+        string? termStr = HttpContext.Request.Form["term"];
+        
+        if (planIdStr == null || courseId == null || yearStr == null || termStr == null)
+        {
+            return BadRequest();
+        }
+
+        if (!int.TryParse(yearStr, out var year) || !int.TryParse(planIdStr, out var planId) || !int.TryParse(termStr, out var termNum))
+        {
+            return BadRequest();
+        }
+
+        var term = (TermSeason) termNum;
+        var user = await userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+        
+        var plan = context.Plans.FirstOrDefault(p => p.Id == planId && p.PlannerUserId == user.Id);
+        if (plan == null)
+        {
+            return BadRequest();
+        }
+
+        await context.PlannedCourses.Where(pc => pc.PlanId == plan.Id && pc.CourseId == courseId).ExecuteDeleteAsync();
+        
+        var newPlannedCourse = new PlannedCourse
+        {
+            PlanId = plan.Id,
+            CourseId = courseId,
+            Year = year,
+            TermSeason = term
+        };
+        plan.PlannedCourses.Add(newPlannedCourse);
+        context.PlannedCourses.Add(newPlannedCourse);
+        await context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

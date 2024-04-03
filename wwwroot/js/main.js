@@ -98,7 +98,7 @@ function renderCourses() {
     for (const course of Object.values(catalogData.plan.courses)) {
         const {name: courseName, credits} = findCourse(course.id);
         const $termBlock = $(`#term-${course.year}-${course.term}`);
-        $termBlock.append(`<p>${course.id} ${courseName}</p>`);
+        $termBlock.append(`<p draggable="true" class="draggable-course" ondragstart="drag(event, '${course.id}');">${course.id} ${courseName}</p>`);
         const $hours = $(`#term-${course.year}-${course.term}-hours`);
         const currentHours = parseInt($hours.text().replace('Hours: ', ''), 10);
         $hours.text(`Hours: ${currentHours + credits}`);
@@ -215,7 +215,7 @@ function populateAccordion() {
             if (!courseInfo) {
                 continue;
             }
-            content += `<p>${course} ${courseInfo.name}</p><hr class="accordion-separator">`;
+            content += `<p draggable="true" class="draggable-course" ondragstart="drag(event, '${courseInfo.id}');">${course} ${courseInfo.name}</p><hr class="accordion-separator">`;
         }
         content += '</div>';
     }
@@ -259,7 +259,7 @@ function populateTable(filter) {
     })
 
     for (let course of courses.filter(c => c.id.toLowerCase().includes(filter) || c.description.toLowerCase().includes(filter) || c.name.toLowerCase().includes(filter))) {
-        let newLine = `<tr class="course-finder-row" draggable="true" ondragstart="drag(event, '${course.id}');"><td>${course.id}</td><td>${course.name}</td><td>${course.description}</td><td>${course.credits}</td></tr>`;
+        let newLine = `<tr class="draggable-course" draggable="true" ondragstart="drag(event, '${course.id}');"><td>${course.id}</td><td>${course.name}</td><td>${course.description}</td><td>${course.credits}</td></tr>`;
         table.innerHTML += newLine;
     }
 }
@@ -320,6 +320,7 @@ function populateModal(resetSuggested = true) {
                 return;
             }
             hasRemainingMajor = true;
+            console.log(id)
             $addMajor.append(`<option data-type="major" value="${id}">${name}</option>`);
         });
 
@@ -336,14 +337,14 @@ function populateModal(resetSuggested = true) {
             $addMajor.append(`<option hidden selected disabled>&lt;No more majors&gt;</option>`);
             $addMajor.attr('disabled', true);
         } else {
-            $addMajor.children(':first').insertBefore(`<option hidden selected disabled>&lt;Add a major&gt;</option>`);
+            $addMajor.prepend(`<option hidden selected disabled>&lt;Add a major&gt;</option>`);
         }
 
         if (!hasRemainingMinor) {
             $addMinor.append(`<option hidden selected disabled>&lt;No more minors&gt;</option>`);
             $addMinor.attr('disabled', true);
         } else {
-            $addMinor.children(':first').insertBefore(`<option hidden selected disabled>&lt;Add a minor&gt;</option>`);
+            $addMinor.prepend(`<option hidden selected disabled>&lt;Add a minor&gt;</option>`);
         }
     } else {
         $majorList.html('<p class="list-no-data">&lt;No data&gt;</p>');
@@ -460,7 +461,7 @@ function drop(ev, year, term) {
         term
     };
 
-    $.post('add_course.php', {
+    $.post('/Plan/AddCourse/', {
         'plan-id': catalogData.plan.id,
         'course-id': courseId,
         year,

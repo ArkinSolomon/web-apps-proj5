@@ -25,7 +25,7 @@ public class PlannerController(
         var activePlan = await context.Plans.Where(p => p.PlannerUserId == user.Id && p.IsActive).FirstOrDefaultAsync();
         return View(new PlannerModel
         {
-            User = user!,
+            User = user,
             ActivePlan = activePlan
         });
     }
@@ -50,14 +50,14 @@ public class PlannerController(
         {
             foreach (var accomplishment in activePlan.Accomplishments)
             {
-                var requirements =
-                    context.Requirements.Where(requirement => requirement.Accomplishment.Id == accomplishment.Id);
+                var requirements = context.Requirements
+                    .Where(requirement => requirement.Accomplishment!.Id == accomplishment.Id).ToList();
                 if (requirements.IsNullOrEmpty())
                 {
                     continue;
                 }
 
-                foreach (var requirement in requirements.Include(requirement => requirement.Course))
+                foreach (var requirement in requirements)
                 {
                     List<string> addList;
                     switch (requirement.Type)
@@ -75,14 +75,13 @@ public class PlannerController(
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    if (!addList.Contains(requirement.Course.Id))
+                    if (!addList.Contains(requirement.CourseId))
                     {
-                        addList.Add(requirement.Course.Id);
+                        addList.Add(requirement.CourseId);
                     }
-
-                    genEds = context.Courses.Where(c => c.IsGenEd).Select(c => c.Id).ToList();
                 }
             }
+            genEds = context.Courses.Where(c => c.IsGenEd).Select(c => c.Id).ToList();
         }
 
         return Json(new RequirementsData
@@ -144,8 +143,9 @@ public class PlannerController(
         CurrentCatalogData? currentCatalog = null;
         if (activePlan != null)
         {
-            var courses = context.CourseOfferedYears.Where(coy => coy.YearOffered == activePlan.CatalogYear)
-                .ToDictionary(c => c.Course.Id, c => CourseData.FromCourse(c.Course));
+            var courses = context.CourseOfferedYears.Include(coy => coy.Course)
+                .Where(coy => coy.YearOffered == activePlan.CatalogYear)
+                .ToDictionary(c => c.Course!.Id, c => CourseData.FromCourse(c.Course!));
 
             currentCatalog = new CurrentCatalogData
             {
