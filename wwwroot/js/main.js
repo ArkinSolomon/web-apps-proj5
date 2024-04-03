@@ -95,13 +95,21 @@ function renderCourses() {
     $('.hours').text('Hours: 0')
     $('.term-block').find('p:gt(1)').remove();
 
+    $(`.accordion-course`).removeClass('req-satisfied');
+
     for (const course of Object.values(catalogData.plan.courses)) {
         const {name: courseName, credits} = findCourse(course.id);
         const $termBlock = $(`#term-${course.year}-${course.term}`);
-        $termBlock.append(`<p draggable="true" class="draggable-course" ondragstart="drag(event, '${course.id}');">${course.id} ${courseName}</p>`);
+        $termBlock.append(`<p draggable="true" class="listed-course draggable-course" ondragstart="drag(event, '${course.id}');">${course.id} ${courseName}<button class="rm-course-button" onclick="removeCourse('${course.id}');">X</button></p>`);
         const $hours = $(`#term-${course.year}-${course.term}-hours`);
         const currentHours = parseInt($hours.text().replace('Hours: ', ''), 10);
         $hours.text(`Hours: ${currentHours + credits}`);
+        for (const [categoryName, category] of Object.entries(requirementsData)) {
+            const $course = $(`#accordion-course-${categoryName}-${course.id}`);
+            if ($course) {
+                $course.addClass('req-satisfied');
+            }
+        }
     }
 }
 
@@ -215,7 +223,7 @@ function populateAccordion() {
             if (!courseInfo) {
                 continue;
             }
-            content += `<p draggable="true" class="draggable-course" ondragstart="drag(event, '${courseInfo.id}');">${course} ${courseInfo.name}</p><hr class="accordion-separator">`;
+            content += `<p draggable="true" class="draggable-course accordion-course" id="accordion-course-${categoryName}-${courseInfo.id}" ondragstart="drag(event, '${courseInfo.id}');">${course} ${courseInfo.name}</p><hr class="accordion-separator">`;
         }
         content += '</div>';
     }
@@ -448,6 +456,16 @@ function determineIfSaveEnabled() {
 
 function drag(ev, id) {
     ev.dataTransfer.setData('course-id', id);
+}
+
+function removeCourse(courseId)  {
+    $.post('/Plan/RemoveCourse/', {
+        'plan-id': catalogData.plan.id,
+        'course-id': courseId,
+    }).catch();
+    delete catalogData.plan.courses[courseId];
+
+    renderCourses();
 }
 
 function drop(ev, year, term) {

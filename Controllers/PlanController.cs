@@ -188,4 +188,39 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
 
         return NoContent();
     }
+    
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> RemoveCourse()
+    {
+        string? planIdStr = HttpContext.Request.Form["plan-id"];
+        string? courseId = HttpContext.Request.Form["course-id"];
+        
+        if (planIdStr == null || courseId == null)
+        {
+            return BadRequest();
+        }
+
+        if (!int.TryParse(planIdStr, out var planId))
+        {
+            return BadRequest();
+        }
+
+        var user = await userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+        
+        var plan = context.Plans.FirstOrDefault(p => p.Id == planId && p.PlannerUserId == user.Id);
+        if (plan == null)
+        {
+            return BadRequest();
+        }
+
+        await context.PlannedCourses.Where(pc => pc.PlanId == plan.Id && pc.CourseId == courseId).ExecuteDeleteAsync();
+        await context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }

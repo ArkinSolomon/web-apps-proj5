@@ -533,3 +533,18 @@ li.acc-list-item > p {
 .draggable-course {
     cursor: grab;
 }
+
+.rm-course-button {
+    float: right;
+    display: none;
+    visibility: hidden;
+}
+
+.listed-course:hover .rm-course-button {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.req-satisfied {
+    color: var(--bright-contrast-background);
+}
