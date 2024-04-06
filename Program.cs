@@ -1,11 +1,20 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebAppsProject5.Models;
+
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Development") ?? throw new InvalidOperationException("Connection string 'Development' not found.");
+var connectionString = builder.Configuration.GetConnectionString("Development") ??
+                       throw new InvalidOperationException("Connection string 'Development' not found.");
 
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySql(connectionString, ServerVersion.Parse("8.3.0")));
-builder.Services.AddDefaultIdentity<PlannerUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationContext>();
-
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.Parse("8.3.0")));
+builder.Services.AddDefaultIdentity<PlannerUser>(
+        options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<ApplicationContext>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -30,3 +39,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+return;
+

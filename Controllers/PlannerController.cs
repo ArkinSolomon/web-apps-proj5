@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,27 +14,52 @@ public class PlannerController(
     UserManager<PlannerUser> userManager,
     SignInManager<PlannerUser> signInManager) : Controller
 {
+
     [Authorize]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? id)
     {
         var user = await userManager.GetUserAsync(User);
+        
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            if (id == null && user != null && !await userManager.IsInRoleAsync(user, "student"))
+            {
+                return RedirectToAction("Students", "People");
+            }
+
+            return Unauthorized();
+            // return RedirectToAction("Logout");
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
         }
-
+        
         var activePlan = await context.Plans.Where(p => p.PlannerUserId == user.Id && p.IsActive).FirstOrDefaultAsync();
         return View(new PlannerModel
         {
             User = user,
-            ActivePlan = activePlan
+            ActivePlan = activePlan,
+            PlanAccomplishmentMajors = await context.PlanAccomplishments
+                .Where(pa => pa.Accomplishment.Type == AccomplishmentType.Major).Include(pa => pa.Accomplishment)
+                .ToListAsync(),
+            IsStudent = User.IsInRole("student"),
+            UseIdSuffix = id
         });
     }
 
     [Authorize]
-    public async Task<IActionResult> Requirements()
+    public async Task<IActionResult> Requirements(string? id)
     {
         var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
@@ -44,14 +70,16 @@ public class PlannerController(
         List<string> cognates = [];
         List<string> genEds = [];
 
-        var activePlan = await context.Plans.Where(p => p.PlannerUserId == user.Id && p.IsActive)
-            .Include(plan => plan.Accomplishments).FirstOrDefaultAsync();
+        var activePlan = await context.Plans.Where(p => p.PlannerUserId == user.Id && p.IsActive).FirstOrDefaultAsync();
         if (activePlan != null)
         {
-            foreach (var accomplishment in activePlan.Accomplishments)
+            var planAccomplishments =
+                await context.PlanAccomplishments.Where(pa => pa.PlanId == activePlan.Id).ToListAsync();
+            foreach (var planAccomplishment in planAccomplishments)
             {
-                var requirements = context.Requirements
-                    .Where(requirement => requirement.Accomplishment!.Id == accomplishment.Id).ToList();
+                var requirements = await context.Requirements
+                    .Where(requirement => requirement.Accomplishment!.Id == planAccomplishment.AccomplishmentId)
+                    .ToListAsync();
                 if (requirements.IsNullOrEmpty())
                 {
                     continue;
@@ -59,21 +87,13 @@ public class PlannerController(
 
                 foreach (var requirement in requirements)
                 {
-                    List<string> addList;
-                    switch (requirement.Type)
+                    var addList = requirement.Type switch
                     {
-                        case RequirementType.Core:
-                            addList = core;
-                            break;
-                        case RequirementType.Cognate:
-                            addList = cognates;
-                            break;
-                        case RequirementType.Elective:
-                            addList = electives;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                        RequirementType.Core => core,
+                        RequirementType.Cognate => cognates,
+                        RequirementType.Elective => electives,
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
 
                     if (!addList.Contains(requirement.CourseId))
                     {
@@ -81,6 +101,7 @@ public class PlannerController(
                     }
                 }
             }
+
             genEds = context.Courses.Where(c => c.IsGenEd).Select(c => c.Id).ToList();
         }
 
@@ -95,9 +116,15 @@ public class PlannerController(
 
     [Authorize]
     [HttpGet]
-    public async Task<IActionResult> Catalog()
+    public async Task<IActionResult> Catalog(string? id)
     {
         var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
@@ -105,7 +132,7 @@ public class PlannerController(
 
         var plannedCourses = new Dictionary<string, PlannedCourseData>();
 
-        var activePlan = context.Plans.Include(plan => plan.Accomplishments)
+        var activePlan = context.Plans
             .Include(plan => plan.PlannedCourses)
             .ThenInclude(plannedCourse => plannedCourse.Course)
             .FirstOrDefault(p => p.PlannerUserId == user.Id && p.IsActive);
@@ -131,14 +158,39 @@ public class PlannerController(
             CurrYear = user.Year,
             Id = activePlan?.Id,
             Courses = plannedCourses,
-            Majors = activePlan?.Accomplishments.Where(a => a.Type == AccomplishmentType.Major).Select(a => a.Name)
-                .Order().ToList() ?? [],
-            Minors = activePlan?.Accomplishments.Where(a => a.Type == AccomplishmentType.Minor).Select(a => a.Name)
-                .Order().ToList() ?? []
+            Majors = activePlan != null
+                ? context.PlanAccomplishments
+                    .Where(pa => pa.PlanId == activePlan.Id && pa.Accomplishment.Type == AccomplishmentType.Major)
+                    .Select(pa => pa.Accomplishment.Name)
+                    .ToList().Order().ToList()
+                : [],
+            Minors = activePlan != null
+                ? context.PlanAccomplishments
+                    .Where(pa => pa.PlanId == activePlan.Id && pa.Accomplishment.Type == AccomplishmentType.Minor)
+                    .Select(pa => pa.Accomplishment.Name)
+                    .ToList().Order().ToList()
+                : []
         };
 
-        var userPlans = context.Plans.Where(p => p.PlannerUser.Id == user.Id).AsEnumerable().Select(PlanData.FromPlan)
-            .ToDictionary(p => p.Id, p => p);
+        var userPlans = await context.Plans.Where(p => p.PlannerUser.Id == user.Id).ToListAsync();
+        var userPlanData = userPlans.Select(p =>
+            {
+                var majors = context.PlanAccomplishments.Include(pa => pa.Accomplishment)
+                    .Where(pa => pa.PlanId == p.Id && pa.Accomplishment.Type == AccomplishmentType.Major)
+                    .ToDictionary(pa => pa.Accomplishment.Id, pa => pa.Accomplishment.Name);
+                var minors = context.PlanAccomplishments.Include(pa => pa.Accomplishment)
+                    .Where(pa => pa.PlanId == p.Id && pa.Accomplishment.Type == AccomplishmentType.Minor)
+                    .ToDictionary(pa => pa.Accomplishment.Id, pa => pa.Accomplishment.Name);
+                return new PlanData
+                {
+                    Id = p.Id,
+                    Name = p.PlanName,
+                    Majors = majors,
+                    Minors = minors,
+                    CatalogYear = p.CatalogYear
+                };
+            })
+            .ToDictionary(pd => pd.Id, pd => pd);
 
         CurrentCatalogData? currentCatalog = null;
         if (activePlan != null)
@@ -164,15 +216,22 @@ public class PlannerController(
         return Json(new CatalogData
         {
             Plan = currentPlan,
-            Plans = userPlans,
+            Plans = userPlanData,
             Catalog = currentCatalog
         });
     }
 
-    [Authorize]
     public async Task<IActionResult> Logout()
     {
-        await signInManager.SignOutAsync();
+        try
+        {
+            await signInManager.SignOutAsync();
+        }
+        catch
+        {
+            // ignored
+        }
+
         return RedirectToAction("Index");
     }
 }

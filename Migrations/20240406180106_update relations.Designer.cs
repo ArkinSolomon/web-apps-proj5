@@ -12,8 +12,8 @@ using WebAppsProject5.Models;
 namespace WebAppsProject5.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240402151236_idk whats going on anymore")]
-    partial class idkwhatsgoingonanymore
+    [Migration("20240406180106_update relations")]
+    partial class updaterelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,15 +173,10 @@ namespace WebAppsProject5.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("PlanId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
 
                     b.ToTable("Accomplishments");
                 });
@@ -214,6 +209,10 @@ namespace WebAppsProject5.Migrations
 
             modelBuilder.Entity("WebAppsProject5.Models.CourseOffered", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("CourseId")
                         .IsRequired()
                         .HasColumnType("Varchar(10)");
@@ -221,9 +220,34 @@ namespace WebAppsProject5.Migrations
                     b.Property<short>("YearOffered")
                         .HasColumnType("Year");
 
+                    b.HasKey("Id");
+
                     b.HasIndex("CourseId");
 
                     b.ToTable("CourseOfferedYears");
+                });
+
+            modelBuilder.Entity("WebAppsProject5.Models.FacultyStudentAssignment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("FacultyId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId")
+                        .IsUnique();
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("FacultyStudentAssignments");
                 });
 
             modelBuilder.Entity("WebAppsProject5.Models.Plan", b =>
@@ -253,6 +277,27 @@ namespace WebAppsProject5.Migrations
                     b.HasIndex("PlannerUserId");
 
                     b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("WebAppsProject5.Models.PlanAccomplishment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("AccomplishmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomplishmentId");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("PlanAccomplishments");
                 });
 
             modelBuilder.Entity("WebAppsProject5.Models.PlannedCourse", b =>
@@ -435,13 +480,6 @@ namespace WebAppsProject5.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAppsProject5.Models.Accomplishment", b =>
-                {
-                    b.HasOne("WebAppsProject5.Models.Plan", null)
-                        .WithMany("Accomplishments")
-                        .HasForeignKey("PlanId");
-                });
-
             modelBuilder.Entity("WebAppsProject5.Models.CourseOffered", b =>
                 {
                     b.HasOne("WebAppsProject5.Models.Course", "Course")
@@ -453,6 +491,24 @@ namespace WebAppsProject5.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("WebAppsProject5.Models.FacultyStudentAssignment", b =>
+                {
+                    b.HasOne("WebAppsProject5.Models.PlannerUser", "Faculty")
+                        .WithOne("AdvisorAssignment")
+                        .HasForeignKey("WebAppsProject5.Models.FacultyStudentAssignment", "FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebAppsProject5.Models.PlannerUser", "Student")
+                        .WithMany("Students")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("WebAppsProject5.Models.Plan", b =>
                 {
                     b.HasOne("WebAppsProject5.Models.PlannerUser", "PlannerUser")
@@ -462,6 +518,25 @@ namespace WebAppsProject5.Migrations
                         .IsRequired();
 
                     b.Navigation("PlannerUser");
+                });
+
+            modelBuilder.Entity("WebAppsProject5.Models.PlanAccomplishment", b =>
+                {
+                    b.HasOne("WebAppsProject5.Models.Accomplishment", "Accomplishment")
+                        .WithMany()
+                        .HasForeignKey("AccomplishmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebAppsProject5.Models.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Accomplishment");
+
+                    b.Navigation("Plan");
                 });
 
             modelBuilder.Entity("WebAppsProject5.Models.PlannedCourse", b =>
@@ -504,9 +579,14 @@ namespace WebAppsProject5.Migrations
 
             modelBuilder.Entity("WebAppsProject5.Models.Plan", b =>
                 {
-                    b.Navigation("Accomplishments");
-
                     b.Navigation("PlannedCourses");
+                });
+
+            modelBuilder.Entity("WebAppsProject5.Models.PlannerUser", b =>
+                {
+                    b.Navigation("AdvisorAssignment");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

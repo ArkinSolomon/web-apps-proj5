@@ -35,3 +35,45 @@ hr {
 dt {
     font-weight: bold;
 }
+
+nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--header-background);
+    padding: 15px 12px;
+    gap: 2px;
+}
+
+nav>* {
+    display: block;
+}
+
+nav>div {
+    float: right;
+    display: flex;
+    width: 35%;
+    min-width: fit-content;
+    flex-direction: row;
+    justify-content: end;
+}
+
+nav h1 {
+    color: black;
+}
+
+nav>div>a, nav>div>a:visited {
+    text-decoration: underline;
+    color: black;
+    gap: 6px;
+    padding: 1px 4px;
+}
+
+nav>div>a:hover {
+    cursor: pointer;
+}
+
+.danger-text {
+    color: red;
+}

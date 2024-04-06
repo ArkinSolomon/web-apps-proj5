@@ -7,11 +7,13 @@ namespace WebAppsProject5.Models;
 public class ApplicationContext(DbContextOptions<ApplicationContext> options) : IdentityDbContext<PlannerUser>(options)
 {
     public DbSet<Accomplishment> Accomplishments { get; set; }
+    public DbSet<PlanAccomplishment> PlanAccomplishments { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Plan> Plans { get; set; }
     public DbSet<PlannedCourse> PlannedCourses { get; set; }
     public DbSet<Requirement> Requirements { get; set; }
     public DbSet<CourseOffered> CourseOfferedYears { get; set; }
+    public DbSet<FacultyStudentAssignment> FacultyStudentAssignments { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -32,6 +34,16 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
             .WithMany()
             .HasForeignKey(pc => pc.CourseId)
             .IsRequired();
+        
+        builder.Entity<PlannerUser>()
+            .HasOne<FacultyStudentAssignment>(pu => pu.AdvisorAssignment)
+            .WithOne(fsa => fsa.Student)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<PlannerUser>()
+            .HasMany<FacultyStudentAssignment>(pu => pu.Students)
+            .WithOne(fsa => fsa.Faculty);
         
         base.OnModelCreating(builder);
     }

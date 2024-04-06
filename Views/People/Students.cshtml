@@ -1,0 +1,59 @@
+@model StudentsViewModel
+
+@{
+    ViewBag.Title = "Students";
+    Layout = "_Layout";
+}
+
+<h1>Students</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Students.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Students.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Students.First().AdvisorAssignment)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Students)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.AdvisorAssignment == null)
+                {
+                    <span>N/A</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.AdvisorAssignment.Faculty.Name)
+                }
+            </td>
+            <td>
+                <a asp-action="Index" asp-controller="Planner" asp-route-id="@item.Id">Modify Plan</a> | 
+                <a asp-action="ChangeFaculty" asp-controller="People" asp-route-id="@item.Id">Assign Advisor</a>
+                @if (Model.IsAdmin)
+                {
+                    <span> | </span>
+                    <a asp-action="PromoteUser" asp-controller="People" asp-route-id="@item.Id">Promote User</a> 
+                    <span> | </span>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

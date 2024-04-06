@@ -1,0 +1,27 @@
+@model PlannerUser
+
+@{
+    ViewBag.Title = "Delete User";
+    Layout = "_Layout";
+}
+
+<h1>Delete</h1>
+
+<h4>Delete @Model.Name</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Delete" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" value="@Model.Id"/>
+            <p>Are you sure you want to delete @Model.Name? This can not be undone.</p>
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-primary danger-text"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Students">Back to List</a>
+</div>

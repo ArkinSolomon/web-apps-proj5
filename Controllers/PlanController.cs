@@ -12,9 +12,15 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
 {
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> NewPlan()
+    public async Task<IActionResult> NewPlan(string? id)
     {
         var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
@@ -37,12 +43,12 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
 
         await context.SaveChangesAsync();
 
-        return RedirectToAction("Index", "Planner");
+        return RedirectToAction("Index", "Planner", new { id });
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> LoadPlan()
+    public async Task<IActionResult> LoadPlan(string? id)
     {
         string? selectedPlanIdStr = HttpContext.Request.Form["plan-select"];
         if (selectedPlanIdStr == null)
@@ -55,7 +61,13 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
             return BadRequest();
         }
 
-        var user = (await userManager.GetUserAsync(User));
+        var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
@@ -77,12 +89,12 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
 
         await context.SaveChangesAsync();
 
-        return RedirectToAction("Index", "Planner");
+        return RedirectToAction("Index", "Planner", new { id });
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> UpdatePlan()
+    public async Task<IActionResult> UpdatePlan(string? id)
     {
         string? planIdStr = HttpContext.Request.Form["plan-id"];
         string? planName = HttpContext.Request.Form["plan-name"];
@@ -99,6 +111,12 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
         }
 
         var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
@@ -119,54 +137,71 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
             {
                 return 0;
             }
-            
+
             failed = !int.TryParse(m, out var parsed);
             return failed ? 0 : parsed;
         };
 
         var majors = majorsStr.IsNullOrEmpty() ? [] : splitMajors.Select(intSelector).ToHashSet();
         var minors = minorsStr.IsNullOrEmpty() ? [] : splitMinors.Select(intSelector).ToHashSet();
-        if (failed || (majors.Count != splitMajors.Length && !majorsStr.IsNullOrEmpty()) || (minors.Count != splitMinors.Length && !minorsStr.IsNullOrEmpty()))
+        if (failed || (majors.Count != splitMajors.Length && !majorsStr.IsNullOrEmpty()) ||
+            (minors.Count != splitMinors.Length && !minorsStr.IsNullOrEmpty()))
         {
             return BadRequest();
         }
 
+        await context.PlanAccomplishments.Where(pa => pa.PlanId == selectedPlanId).ExecuteDeleteAsync();
         var selectedAccomplishments =
             context.Accomplishments.Where(a => majors.Contains(a.Id) || minors.Contains(a.Id)).ToList();
+        foreach (var selectedAccomplishment in selectedAccomplishments)
+        {
+            var newPlanAccomplishment = new PlanAccomplishment
+            {
+                AccomplishmentId = selectedAccomplishment.Id,
+                PlanId = selectedPlanId
+            };
+            await context.PlanAccomplishments.AddAsync(newPlanAccomplishment);
+        }
 
-        plan.Accomplishments = selectedAccomplishments;
         plan.PlanName = planName;
         await context.SaveChangesAsync();
 
-        return RedirectToAction("Index", "Planner");
+        return RedirectToAction("Index", "Planner", new { id });
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> AddCourse()
+    public async Task<IActionResult> AddCourse(string? id)
     {
         string? planIdStr = HttpContext.Request.Form["plan-id"];
         string? courseId = HttpContext.Request.Form["course-id"];
         string? yearStr = HttpContext.Request.Form["year"];
         string? termStr = HttpContext.Request.Form["term"];
-        
+
         if (planIdStr == null || courseId == null || yearStr == null || termStr == null)
         {
             return BadRequest();
         }
 
-        if (!int.TryParse(yearStr, out var year) || !int.TryParse(planIdStr, out var planId) || !int.TryParse(termStr, out var termNum))
+        if (!int.TryParse(yearStr, out var year) || !int.TryParse(planIdStr, out var planId) ||
+            !int.TryParse(termStr, out var termNum))
         {
             return BadRequest();
         }
 
-        var term = (TermSeason) termNum;
+        var term = (TermSeason)termNum;
         var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
         }
-        
+
         var plan = context.Plans.FirstOrDefault(p => p.Id == planId && p.PlannerUserId == user.Id);
         if (plan == null)
         {
@@ -174,7 +209,7 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
         }
 
         await context.PlannedCourses.Where(pc => pc.PlanId == plan.Id && pc.CourseId == courseId).ExecuteDeleteAsync();
-        
+
         var newPlannedCourse = new PlannedCourse
         {
             PlanId = plan.Id,
@@ -188,14 +223,14 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
 
         return NoContent();
     }
-    
+
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> RemoveCourse()
+    public async Task<IActionResult> RemoveCourse(string? id)
     {
         string? planIdStr = HttpContext.Request.Form["plan-id"];
         string? courseId = HttpContext.Request.Form["course-id"];
-        
+
         if (planIdStr == null || courseId == null)
         {
             return BadRequest();
@@ -207,11 +242,17 @@ public class PlanController(ApplicationContext context, UserManager<PlannerUser>
         }
 
         var user = await userManager.GetUserAsync(User);
+        if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
+        {
+            return Unauthorized();
+        }
+
+        user = id == null ? user : await userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Unauthorized();
         }
-        
+
         var plan = context.Plans.FirstOrDefault(p => p.Id == planId && p.PlannerUserId == user.Id);
         if (plan == null)
         {

@@ -9,11 +9,13 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
+@await Component.InvokeAsync("Nav")
 <div class="container">
     <main role="main">
         @RenderBody()
     </main>
 </div>
 <partial name="_ValidationScriptsPartial"/>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

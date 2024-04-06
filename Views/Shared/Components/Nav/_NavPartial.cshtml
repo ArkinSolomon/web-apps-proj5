@@ -1,0 +1,19 @@
+@model NavModel
+
+<nav>
+    <h1>APE | Admin Portal</h1>
+    <div>
+        @if (Model.IsAdmin)
+        {
+            <a asp-controller="Accomplishment" asp-action="Index">Accomplishments</a>
+            <a asp-controller="Course" asp-action="Index">Courses</a>
+            <a asp-controller="CourseOffered" asp-action="Index">Course Offers</a>
+        }
+        <a asp-controller="People" asp-action="Students">Students</a>
+        @if (Model.IsAdmin)
+        {
+            <a asp-controller="People" asp-action="Faculty">Faculty</a>
+        }
+        <a asp-controller="Planner" asp-action="Logout">Logout (@Model.Name)</a>
+    </div>
+</nav>

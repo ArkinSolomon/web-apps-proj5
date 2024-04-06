@@ -16,6 +16,22 @@ namespace WebAppsProject5.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Accomplishments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accomplishments", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -77,9 +93,9 @@ namespace WebAppsProject5.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "Varchar(10)", nullable: false)
+                    Id = table.Column<string>(type: "Varchar(10)", maxLength: 10, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    Name = table.Column<string>(type: "Varchar(64)", maxLength: 64, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -220,6 +236,34 @@ namespace WebAppsProject5.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "FacultyStudentAssignments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FacultyId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StudentId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FacultyStudentAssignments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FacultyStudentAssignments_AspNetUsers_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FacultyStudentAssignments_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Plans",
                 columns: table => new
                 {
@@ -248,12 +292,14 @@ namespace WebAppsProject5.Migrations
                 name: "CourseOfferedYears",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CourseId = table.Column<string>(type: "Varchar(10)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     YearOffered = table.Column<short>(type: "Year", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_CourseOfferedYears", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CourseOfferedYears_Courses_CourseId",
                         column: x => x.CourseId,
@@ -264,24 +310,56 @@ namespace WebAppsProject5.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Accomplishments",
+                name: "Requirements",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    PlanId = table.Column<int>(type: "int", nullable: true)
+                    AccomplishmentId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<string>(type: "Varchar(10)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accomplishments", x => x.Id);
+                    table.PrimaryKey("PK_Requirements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accomplishments_Plans_PlanId",
+                        name: "FK_Requirements_Accomplishments_AccomplishmentId",
+                        column: x => x.AccomplishmentId,
+                        principalTable: "Accomplishments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Requirements_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "PlanAccomplishments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    PlanId = table.Column<int>(type: "int", nullable: false),
+                    AccomplishmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlanAccomplishments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlanAccomplishments_Accomplishments_AccomplishmentId",
+                        column: x => x.AccomplishmentId,
+                        principalTable: "Accomplishments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlanAccomplishments_Plans_PlanId",
                         column: x => x.PlanId,
                         principalTable: "Plans",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -314,37 +392,6 @@ namespace WebAppsProject5.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Requirements",
-                columns: table => new
-                {
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    AccomplishmentId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<string>(type: "Varchar(10)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "FK_Requirements_Accomplishments_AccomplishmentId",
-                        column: x => x.AccomplishmentId,
-                        principalTable: "Accomplishments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Requirements_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accomplishments_PlanId",
-                table: "Accomplishments",
-                column: "PlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -387,6 +434,27 @@ namespace WebAppsProject5.Migrations
                 name: "IX_CourseOfferedYears_CourseId",
                 table: "CourseOfferedYears",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FacultyStudentAssignments_FacultyId",
+                table: "FacultyStudentAssignments",
+                column: "FacultyId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FacultyStudentAssignments_StudentId",
+                table: "FacultyStudentAssignments",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlanAccomplishments_AccomplishmentId",
+                table: "PlanAccomplishments",
+                column: "AccomplishmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlanAccomplishments_PlanId",
+                table: "PlanAccomplishments",
+                column: "PlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlannedCourses_CourseId",
@@ -436,6 +504,12 @@ namespace WebAppsProject5.Migrations
                 name: "CourseOfferedYears");
 
             migrationBuilder.DropTable(
+                name: "FacultyStudentAssignments");
+
+            migrationBuilder.DropTable(
+                name: "PlanAccomplishments");
+
+            migrationBuilder.DropTable(
                 name: "PlannedCourses");
 
             migrationBuilder.DropTable(
@@ -445,13 +519,13 @@ namespace WebAppsProject5.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Plans");
+
+            migrationBuilder.DropTable(
                 name: "Accomplishments");
 
             migrationBuilder.DropTable(
                 name: "Courses");
-
-            migrationBuilder.DropTable(
-                name: "Plans");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

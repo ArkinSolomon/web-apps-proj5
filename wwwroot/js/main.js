@@ -91,6 +91,9 @@ function findCourse(id) {
  */
 let initialMajors, initialMinors;
 
+const matches = /Index\/([a-f0-9-]+)\/?$/i.exec(window.location.href);
+const suffix = matches[1] ? `/${matches[1]}` : '/';
+
 function renderCourses() {
     $('.hours').text('Hours: 0')
     $('.term-block').find('p:gt(1)').remove();
@@ -115,8 +118,8 @@ function renderCourses() {
 
 async function loadData() {
     [catalogData, requirementsData] = await Promise.all([
-        $.ajax('/Planner/Catalog').promise(),
-        $.ajax('/Planner/Requirements').promise()
+        $.ajax('/Planner/Catalog' + suffix).promise(),
+        $.ajax('/Planner/Requirements' + suffix).promise()
     ]);
 
     $('body')[0].classList.remove('loading');
@@ -459,7 +462,7 @@ function drag(ev, id) {
 }
 
 function removeCourse(courseId)  {
-    $.post('/Plan/RemoveCourse/', {
+    $.post('/Plan/RemoveCourse' + suffix, {
         'plan-id': catalogData.plan.id,
         'course-id': courseId,
     }).catch();
@@ -479,7 +482,7 @@ function drop(ev, year, term) {
         term
     };
 
-    $.post('/Plan/AddCourse/', {
+    $.post('/Plan/AddCourse' + suffix, {
         'plan-id': catalogData.plan.id,
         'course-id': courseId,
         year,

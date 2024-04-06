@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAppsProject5.Models;
 
 namespace WebAppsProject5.Controllers;
 
+[Authorize(Roles = "admin")]
 public class AccomplishmentController(ApplicationContext context) : Controller
 {
     // GET: Accomplishment

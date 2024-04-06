@@ -1,4 +1,3 @@
-@using WebAppsProject5.Data
 @model PlannerModel
 
 @{
@@ -28,7 +27,7 @@
         </div>
         <div id="plan-modify-body">
             <div id="load-plan">
-                <form asp-action="LoadPlan" asp-controller="Plan" method="post">
+                <form asp-action="LoadPlan" asp-controller="Plan" asp-route-id="@Model.UseIdSuffix" method="post">
                     <label for="plan-select">Select a different plan:</label>
                     <select id="plan-select" name="plan-select">
                         <option selected disabled hidden>&lt;Select A Plan&gt;</option>
@@ -61,7 +60,7 @@
             <label for="plan-name-update-field">Change name:</label>
             <input id="plan-name-update-field" name="plan-name-update-field" type="text"
                    placeholder="Plan Name"><br><br>
-            <form asp-action="NewPlan" asp-controller="Plan" method="post">
+            <form asp-action="NewPlan" asp-controller="Plan" asp-route-id="@Model.UseIdSuffix" method="post">
                 <input type="submit" value="Create a new plan">
             </form>
         </div>
@@ -69,7 +68,7 @@
             <button id="plan-modify-close">Cancel</button>
             <button id="plan-modify-save">Save</button>
         </div>
-        <form hidden id="update-plan-form" name="update-plan-form" asp-action="UpdatePlan" asp-controller="Plan" method="post">
+        <form hidden id="update-plan-form" name="update-plan-form" asp-action="UpdatePlan" asp-controller="Plan" asp-route-id="@Model.UseIdSuffix" method="post">
             <!--suppress HtmlFormInputWithoutLabel -->
             <input type="text" id="update-plan-form-name" hidden name="plan-name" value="UPDATED PLAN">
             <!--suppress HtmlFormInputWithoutLabel -->
@@ -86,16 +85,12 @@
     <div id="student-data">
         <p>Student: <span>@Model.User.Name</span></p>
         @{
-            var majors = Model.ActivePlan?.Accomplishments.Where(a => a.Type == AccomplishmentType.Major).ToList() ?? [];
-            var majorStr = "N/A";
-            if (majors.Count == 1)
+            var majorStr = Model.PlanAccomplishmentMajors.Count switch
             {
-                majorStr = majors.First().Name;
-            }
-            else if (majors.Count > 1)
-            {
-                majorStr = majors.First().Name + $" and {majors.Count - 1} more";
-            }
+                1 => Model.PlanAccomplishmentMajors.First().Accomplishment.Name,
+                > 1 => Model.PlanAccomplishmentMajors.First().Accomplishment.Name + $" and {Model.PlanAccomplishmentMajors.Count - 1} more",
+                _ => "N/A"
+            };
 
             <p>Major: <span>@majorStr</span></p>
 
@@ -117,15 +112,12 @@
         <section class="bottom" id="links">
             <h3>Links</h3>
             <ul>
-                <li>
-                    <a href="/~asolomo/cs3220.html">Arkin's Awesome Page</a>
-                </li>
-                <li>
-                    <a href="/~prudhom/cs3220.html">George's Page</a>
-                </li>
-                <li>
-                    <a href="/~tracy/cs3220.html">Weston's Page</a>
-                </li>
+                @if (!Model.IsStudent)
+                {
+                    <li>
+                        <a asp-action="Students" asp-controller="People">All Students</a>
+                    </li>
+                }
                 <li>
                     <a asp-action="Logout">Logout</a>
                 </li>

@@ -10,8 +10,7 @@ public class Plan
     // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
     public required string PlannerUserId { get; init; }
     public virtual PlannerUser PlannerUser { get; init; } = null!;
-
-    public List<Accomplishment> Accomplishments { get; set; } = [];
+    
     public int CatalogYear { get; init; }
     public List<PlannedCourse> PlannedCourses { get; set; } = [];
 
