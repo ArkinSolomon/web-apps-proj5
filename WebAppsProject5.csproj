@@ -22,10 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\js\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Course\Create.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Course\Delete.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Course\Details.cshtml" />

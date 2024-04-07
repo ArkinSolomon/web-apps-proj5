@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,6 @@ public class PlannerController(
     public async Task<IActionResult> Index(string? id)
     {
         var user = await userManager.GetUserAsync(User);
-        
         if (user == null || !await context.IsAuthorizedToAccess(id, User, user))
         {
             if (id == null && user != null && !await userManager.IsInRoleAsync(user, "student"))
@@ -27,8 +25,7 @@ public class PlannerController(
                 return RedirectToAction("Students", "People");
             }
 
-            return Unauthorized();
-            // return RedirectToAction("Logout");
+            return RedirectToAction("Logout");
         }
 
         user = id == null ? user : await userManager.FindByIdAsync(id);

@@ -9,8 +9,7 @@ namespace WebAppsProject5.Controllers;
 
 public class PeopleController(
     ApplicationContext context,
-    UserManager<PlannerUser> userManager,
-    RoleManager<IdentityRole> roleManager) : Controller
+    UserManager<PlannerUser> userManager) : Controller
 {
     [Authorize(Roles = "admin, faculty")]
     public async Task<IActionResult> Students()

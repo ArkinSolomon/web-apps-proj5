@@ -68,15 +68,17 @@ let catalogData;
 /**
  * @typedef {('course_id'|'title'|'description'|'credits')} FilterCol
  */
-/**
- * @type {FilterCol}
- */
-let currentSort = 'course_id';
 
 /**
  * @type {RequirementsData}
  */
 let requirementsData;
+
+/**
+ * @type {string|null}
+ */
+let waitForFilter = null;
+const filterWorker = new Worker('/js/filterWorker.js');
 
 /**
  * @param {string} id
@@ -107,7 +109,7 @@ function renderCourses() {
         const $hours = $(`#term-${course.year}-${course.term}-hours`);
         const currentHours = parseInt($hours.text().replace('Hours: ', ''), 10);
         $hours.text(`Hours: ${currentHours + credits}`);
-        for (const [categoryName, category] of Object.entries(requirementsData)) {
+        for (const [categoryName] of Object.entries(requirementsData)) {
             const $course = $(`#accordion-course-${categoryName}-${course.id}`);
             if ($course) {
                 $course.addClass('req-satisfied');
@@ -124,6 +126,19 @@ async function loadData() {
 
     $('body')[0].classList.remove('loading');
 
+    filterWorker.postMessage({
+        initial_data: true,
+        courses: Object.values(catalogData.catalog.courses)
+    });
+
+    filterWorker.onmessage = e => {
+        console.log(e.data.courses.length);
+        if (Object.hasOwn(e.data, 'filter') && e.data.filter !== waitForFilter) {
+            return;
+        }
+        renderTable(e.data.courses);
+    };
+    
     populateAccordion();
     populateTable();
 
@@ -181,28 +196,40 @@ async function loadData() {
         $courseIdCol.click(() => {
             clearSortClass();
             $courseIdCol.addClass('sorted-by');
-            currentSort = 'course_id';
+            filterWorker.postMessage({
+                sort_change: true,
+                newSort: 'course_id'
+            });
             populateTable();
         });
 
         $courseTitleCol.click(() => {
             clearSortClass();
             $courseTitleCol.addClass('sorted-by');
-            currentSort = 'title';
+            filterWorker.postMessage({
+                sort_change: true,
+                newSort: 'title'
+            });
             populateTable();
         });
 
         $courseDescCol.click(() => {
             clearSortClass();
             $courseDescCol.addClass('sorted-by');
-            currentSort = 'description';
+            filterWorker.postMessage({
+                sort_change: true,
+                newSort: 'description'
+            });
             populateTable();
         });
 
         $courseCreditsCol.click(() => {
             clearSortClass();
             $courseCreditsCol.addClass('sorted-by');
-            currentSort = 'credits';
+            filterWorker.postMessage({
+                sort_change: true,
+                newSort: 'credits'
+            });
             populateTable();
         });
     } else {
@@ -214,7 +241,7 @@ async function loadData() {
 function populateAccordion() {
     const $accordion = $('#requirements-accordion');
     let content = '';
-    
+
     if (catalogData.plan.id == null) {
         return;
     }
@@ -241,38 +268,28 @@ function populateAccordion() {
 }
 
 function populateTable(filter) {
-    let table = document.getElementById('course-finder-table-body');
-    table.innerHTML = "";
+    filter = filter ? filter.toLowerCase() : '';
 
-    if (filter) {
-        filter = filter.toLowerCase();
-    } else {
-        filter = '';
-    }
-    
     if (!catalogData.plan.id) {
         return;
     }
+    
+    waitForFilter = filter;
+    filterWorker.postMessage(filter);
+}
 
-    const courses = Object.values(catalogData.catalog.courses);
-    courses.sort((c1, c2) => {
-        switch (currentSort) {
-            case "course_id":
-                return c1.id.localeCompare(c2.id);
-            case "credits":
-                return c2.credits - c1.credits;
-            case "description":
-                return c1.description.localeCompare(c2.description);
-            case "title":
-                return c1.name.localeCompare(c2.name);
-        }
-        return 0;
-    })
-
-    for (let course of courses.filter(c => c.id.toLowerCase().includes(filter) || c.description.toLowerCase().includes(filter) || c.name.toLowerCase().includes(filter))) {
+/**
+ * @param {[Course]} courses
+ */
+function renderTable(courses) {
+    let table = document.getElementById('course-finder-table-body');
+    table.innerHTML = "";
+    let content = "";
+    for (let course of courses) {
         let newLine = `<tr class="draggable-course" draggable="true" ondragstart="drag(event, '${course.id}');"><td>${course.id}</td><td>${course.name}</td><td>${course.description}</td><td>${course.credits}</td></tr>`;
-        table.innerHTML += newLine;
+       content += newLine;
     }
+    table.innerHTML = content;
 }
 
 /**
@@ -331,7 +348,6 @@ function populateModal(resetSuggested = true) {
                 return;
             }
             hasRemainingMajor = true;
-            console.log(id)
             $addMajor.append(`<option data-type="major" value="${id}">${name}</option>`);
         });
 
@@ -461,7 +477,7 @@ function drag(ev, id) {
     ev.dataTransfer.setData('course-id', id);
 }
 
-function removeCourse(courseId)  {
+function removeCourse(courseId) {
     $.post('/Plan/RemoveCourse' + suffix, {
         'plan-id': catalogData.plan.id,
         'course-id': courseId,
@@ -475,7 +491,6 @@ function drop(ev, year, term) {
     ev.preventDefault();
     const courseId = ev.dataTransfer.getData('course-id');
 
-    console.log(courseId, findCourse(courseId).name, year, term);
     catalogData.plan.courses[courseId] = {
         id: courseId,
         year,
@@ -497,7 +512,7 @@ function drop(ev, year, term) {
 }
 
 /**
- * @param {Term} term 
+ * @param {Term} term
  */
 function termString(term) {
     switch (term) {

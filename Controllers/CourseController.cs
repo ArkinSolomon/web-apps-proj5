@@ -5,7 +5,7 @@ using WebAppsProject5.Models;
 
 namespace WebAppsProject5.Controllers;
 
-[Authorize(Roles = "admin")]
+// [Authorize(Roles = "admin")]
 public class CourseController(ApplicationContext context) : Controller
 {
     // GET: Course
@@ -42,7 +42,7 @@ public class CourseController(ApplicationContext context) : Controller
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
-    [ValidateAntiForgeryToken]
+    // [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Name,Description,Credits,IsGenEd")] Course course)
     {
         if (ModelState.IsValid)
