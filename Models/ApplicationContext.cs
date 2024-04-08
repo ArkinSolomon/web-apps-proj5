@@ -17,7 +17,7 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.EnableSensitiveDataLogging(true);
+        // optionsBuilder.EnableSensitiveDataLogging(true);
         base.OnConfiguring(optionsBuilder);
     }
 

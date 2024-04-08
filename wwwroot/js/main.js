@@ -94,7 +94,7 @@ function findCourse(id) {
 let initialMajors, initialMinors;
 
 const matches = /Index\/([a-f0-9-]+)\/?$/i.exec(window.location.href);
-const suffix = matches[1] ? `/${matches[1]}` : '/';
+let suffix = matches && matches[1] ? `/${matches[1]}` : '/';
 
 function renderCourses() {
     $('.hours').text('Hours: 0')
