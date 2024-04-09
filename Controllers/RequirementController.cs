@@ -12,8 +12,8 @@ public class RequirementController(ApplicationContext context) : Controller
     // GET: Requirement
     public async Task<IActionResult> Index()
     {
-        var applicationContext = context.Requirements.Include(r => r.Accomplishment).Include(r => r.Course);
-        return View(await applicationContext.ToListAsync());
+        var reqs = context.Requirements.Include(r => r.Accomplishment).Include(r => r.Course).OrderBy(r => r.Accomplishment!.Name);
+        return View(await reqs.ToListAsync());
     }
 
     // GET: Requirement/Details/5

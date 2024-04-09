@@ -11,7 +11,7 @@ public class CourseController(ApplicationContext context) : Controller
     // GET: Course
     public async Task<IActionResult> Index()
     {
-        return View(await context.Courses.ToListAsync());
+        return View(await context.Courses.OrderBy(a => a.Id).ToListAsync());
     }
 
     // GET: Course/Details/5

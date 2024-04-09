@@ -40,8 +40,6 @@ onmessage = (e) => {
         });
         return;
     }
-    
-    console.log(e.data);
 
     if (!filterHistory) {
         return;

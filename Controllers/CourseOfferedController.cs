@@ -12,8 +12,8 @@ public class CourseOfferedController(ApplicationContext context) : Controller
     // GET: CourseOffered
     public async Task<IActionResult> Index()
     {
-        var applicationContext = context.CourseOfferedYears.Include(c => c.Course);
-        return View(await applicationContext.ToListAsync());
+        var coys = context.CourseOfferedYears.Include(c => c.Course).OrderBy(c => c.Id);
+        return View(await coys.ToListAsync());
     }
 
     // GET: CourseOffered/Details/5

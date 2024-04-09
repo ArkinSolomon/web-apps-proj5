@@ -22,7 +22,7 @@ public class PeopleController(
 
         if (User.IsInRole("admin"))
         {
-            var allStudents = await userManager.GetUsersInRoleAsync("student");
+            var allStudents = (await userManager.GetUsersInRoleAsync("student")).OrderBy(s => s.Name);
             List<PlannerUser> reloadedStudents = [];
             foreach (var student in allStudents)
             {
@@ -44,6 +44,7 @@ public class PeopleController(
             .Include(fsa => fsa.Student)
             .ThenInclude(s => s.AdvisorAssignment)
             .Select(fsa => fsa.Student)
+            .OrderBy(s => s.Name)
             .ToListAsync();
 
         return View(new StudentsViewModel
@@ -56,7 +57,7 @@ public class PeopleController(
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> Faculty()
     {
-        return View(await userManager.GetUsersInRoleAsync("faculty"));
+        return View((await userManager.GetUsersInRoleAsync("faculty")).OrderBy(f => f.Name));
     }
 
     [HttpGet]
@@ -70,7 +71,7 @@ public class PeopleController(
         }
 
         var faculty = await userManager.GetUsersInRoleAsync("faculty");
-        var facultyList = new SelectList(faculty, "Id", "Name", student.AdvisorAssignment?.FacultyId);
+        var facultyList = new SelectList(faculty.OrderBy(f => f.Name), "Id", "Name", student.AdvisorAssignment?.FacultyId);
         
         return View(new AssignFacultyViewModel
         {

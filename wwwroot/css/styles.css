@@ -57,7 +57,8 @@ header h1 {
     position: absolute;
     top: 50%;
     right: 2px;
-    width: fit-content;
+    white-space: nowrap;
+
     transform: translateY(-50%);
     background-color: #2e703d;
     border-radius: 8px;
@@ -68,13 +69,14 @@ header h1 {
 
     display: grid;
     column-gap: 18px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: min-content min-content;
 
     color: white;
 }
 
-#student-data p, a {
+#student-data p, #student-data a {
     display: block;
+    width: fit-content;
 }
 
 #student-data > a {

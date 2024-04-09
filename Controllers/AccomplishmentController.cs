@@ -11,7 +11,7 @@ public class AccomplishmentController(ApplicationContext context) : Controller
     // GET: Accomplishment
     public async Task<IActionResult> Index()
     {
-        return View(await context.Accomplishments.ToListAsync());
+        return View(await context.Accomplishments.OrderBy(a => a.Type).ThenBy(a => a.Name).ToListAsync());
     }
 
     // GET: Accomplishment/Details/5

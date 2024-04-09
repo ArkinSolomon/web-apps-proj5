@@ -132,7 +132,6 @@ async function loadData() {
     });
 
     filterWorker.onmessage = e => {
-        console.log(e.data.courses.length);
         if (Object.hasOwn(e.data, 'filter') && e.data.filter !== waitForFilter) {
             return;
         }

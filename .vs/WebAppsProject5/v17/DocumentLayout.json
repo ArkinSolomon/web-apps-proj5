@@ -3,16 +3,80 @@
   "WorkspaceRootPath": "C:\\Users\\user\\web-apps-proj5\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\views\\planner\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:views\\planner\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\plancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\plancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\wwwroot\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:wwwroot\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\wwwroot\\css\\layout.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:wwwroot\\css\\layout.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\plannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\plannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\wwwroot\\js\\filterworker.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:wwwroot\\js\\filterworker.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\wwwroot\\js\\main.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:wwwroot\\js\\main.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\accomplishmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\accomplishmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\peoplecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\peoplecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\courseofferedcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\courseofferedcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\models\\requirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:models\\requirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\views\\shared\\components\\nav\\_navpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:views\\shared\\components\\nav\\_navpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\wwwroot\\css\\common.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:wwwroot\\css\\common.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\models\\applicationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:models\\applicationcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D2CDF43-9204-49C9-A165-8FF273D7315A}|WebAppsProject5.csproj|c:\\users\\user\\web-apps-proj5\\dump.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
@@ -30,11 +94,219 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Views\\Planner\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Planner\\Index.cshtml",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Views\\Planner\\Index.cshtml",
+              "RelativeToolTip": "Views\\Planner\\Index.cshtml",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAqwFMAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-08T18:09:16.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "styles.css",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\css\\styles.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\styles.css",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\css\\styles.css",
+              "RelativeToolTip": "wwwroot\\css\\styles.css",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAAEcAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-04-08T18:03:46.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "filterWorker.js",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\js\\filterWorker.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\filterWorker.js",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\js\\filterWorker.js",
+              "RelativeToolTip": "wwwroot\\js\\filterWorker.js",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACkAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-04-08T17:54:21.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PlanController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\PlanController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PlanController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\PlanController.cs",
+              "RelativeToolTip": "Controllers\\PlanController.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAowDQAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T17:41:08.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RequirementController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\RequirementController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RequirementController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\RequirementController.cs",
+              "RelativeToolTip": "Controllers\\RequirementController.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAAA4AAAB8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T16:06:38.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PlannerController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\PlannerController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PlannerController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\PlannerController.cs",
+              "RelativeToolTip": "Controllers\\PlannerController.cs",
+              "ViewState": "AQIAADoAAAAAAAAAAADwv1QAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T17:41:09.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "layout.css",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\css\\layout.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\layout.css",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\css\\layout.css",
+              "RelativeToolTip": "wwwroot\\css\\layout.css",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-04-08T15:57:17.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AccomplishmentController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\AccomplishmentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccomplishmentController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\AccomplishmentController.cs",
+              "RelativeToolTip": "Controllers\\AccomplishmentController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T17:37:11.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PeopleController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\PeopleController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PeopleController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\PeopleController.cs",
+              "RelativeToolTip": "Controllers\\PeopleController.cs",
+              "ViewState": "AQIAAJAAAAAAAAAAAAAmwF0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T17:39:27.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "main.js",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\js\\main.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\main.js",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\js\\main.js",
+              "RelativeToolTip": "wwwroot\\js\\main.js",
+              "ViewState": "AQIAAHAAAAAAAAAAAAAgwIUAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-04-08T15:51:59.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CourseOfferedController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\CourseOfferedController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CourseOfferedController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\CourseOfferedController.cs",
+              "RelativeToolTip": "Controllers\\CourseOfferedController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAABWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T17:38:51.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CourseController.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "Controllers\\CourseController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T17:38:34.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Requirement.cs",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Models\\Requirement.cs",
+              "RelativeDocumentMoniker": "Models\\Requirement.cs",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Models\\Requirement.cs",
+              "RelativeToolTip": "Models\\Requirement.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T16:06:33.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "_NavPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Views\\Shared\\Components\\Nav\\_NavPartial.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\Components\\Nav\\_NavPartial.cshtml",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Views\\Shared\\Components\\Nav\\_NavPartial.cshtml",
+              "RelativeToolTip": "Views\\Shared\\Components\\Nav\\_NavPartial.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-08T16:05:50.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "common.css",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\css\\common.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\common.css",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\wwwroot\\css\\common.css",
+              "RelativeToolTip": "wwwroot\\css\\common.css",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-04-08T15:57:16.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Views\\Course\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Course\\Index.cshtml",
+              "ToolTip": "C:\\Users\\user\\web-apps-proj5\\Views\\Course\\Index.cshtml",
+              "RelativeToolTip": "Views\\Course\\Index.cshtml",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACIAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-08T15:55:32.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "ApplicationContext.cs",
               "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Models\\ApplicationContext.cs",
               "RelativeDocumentMoniker": "Models\\ApplicationContext.cs",
@@ -47,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 14,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -60,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 18,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -73,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 19,
               "Title": "dump.sql ",
               "DocumentMoniker": "C:\\Users\\user\\web-apps-proj5\\dump.sql",
               "RelativeDocumentMoniker": "dump.sql",

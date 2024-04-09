@@ -71,11 +71,12 @@ public class PlannerController(
         if (activePlan != null)
         {
             var planAccomplishments =
-                await context.PlanAccomplishments.Where(pa => pa.PlanId == activePlan.Id).ToListAsync();
+                await context.PlanAccomplishments.Where(pa => pa.PlanId == activePlan.Id).Include(pa => pa.Accomplishment).ToListAsync();
             foreach (var planAccomplishment in planAccomplishments)
             {
                 var requirements = await context.Requirements
-                    .Where(requirement => requirement.Accomplishment!.Id == planAccomplishment.AccomplishmentId)
+                    .Include(r => r.Accomplishment)
+                    .Where(requirement => requirement.Accomplishment!.Id == planAccomplishment.Accomplishment.Id)
                     .ToListAsync();
                 if (requirements.IsNullOrEmpty())
                 {
